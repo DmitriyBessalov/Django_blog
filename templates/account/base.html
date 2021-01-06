@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div style="display: flex;flex-direction: column;flex-wrap: nowrap;justify-content: center;align-items: center;align-content: stretch;height: 100vh;position: relative;top: -80px">
+    {% block h1_form %}
+
+    {% endblock %}
+        <div style="width: 280px">
+        {% block form %}
+
+        {% endblock %}
+        </div>
+    </div>
+{% endblock %}
