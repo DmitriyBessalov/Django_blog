@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}Статичная форма{% endblock %}
+
+
+{% block form %}
+
+
+<form method="POST" action="">
+  {% csrf_token %}
+
+    <input type="text" value="text" name="text">
+
+    <textarea name="comment" cols="40" rows="3">textarea</textarea>
+
+    <input id="date" type="date" value="2017-06-01">
+
+    <input type="radio" name="browser" value="ie"> Internet Explorer<Br>
+    <input type="radio" name="browser" value="opera"> Opera<Br>
+    <input type="radio" name="browser" value="firefox"> Firefox<Br>
+
+    <input type="checkbox" id="scales" name="scales" checked>
+
+    <select name="select">
+      <option>Пункт 1</option>
+      <option>Пункт 2</option>
+    </select>
+
+    <select multiple name="multiselect">
+        <option>Чебурашка</option>
+        <option>Крокодил Гена</option>
+        <option>Шапокляк</option>
+        <option>Крыса Лариса</option>
+    </select>
+
+    <input name="myFile" type="file">
+
+</form>
+{% endblock %}
+
+<!--
+text
+textarea
+date
+radiobutton
+checkboхs
+select
+multiselect
+image
+-->
