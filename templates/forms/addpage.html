@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}Форма без модели{% endblock %}
+
+
+
+{% block content %}
+
+<form action="{% url 'add_page' %}" method="post">
+  {% csrf_token %}
+
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+    {% for f in form %}
+        {% if f.widget_type == "radioselect" %}
+            <div>{{f.label}} {{ f }}</div>
+            <div class="form-error">{{ f.errors }}</div>
+        {% else %}
+            <div><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</div>
+            <div class="form-error">{{ f.errors }}</div>
+        {% endif %}
+    {% endfor %}
+
+</form>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+text
+textarea
+date
+radiobutton
+checkboхs
+select
+multiselect
+image
+-->
