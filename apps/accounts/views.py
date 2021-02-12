@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
-from .forms import *
+from .forms import AddPostForm, AddPostModelForm
+from .models import Category
+from django.forms.utils import ErrorDict
 
 
 # Create your views here.
@@ -17,14 +19,50 @@ def html_form(request):
 
 def addpage(request):
     if request.method == 'POST':
-        form = AddPostForm(request.POST)
+        form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
             print(form.cleaned_data)
+
+            """ Сохранение в новой записи в модель """
+            _values = form.cleaned_data
+            p = Category(**_values)
+            p.save()
+
     else:
         form = AddPostForm()
-    """ Вывод формы создавая новую форму """
 
     return render(request, 'forms/addpage.html', {'form': form, 'title': 'Добавление статьи'})
+
+
+def addmodelpage(request):
+    p_id = ''
+    if request.method == 'POST':
+        if 'pk' in request.GET:
+            """Обновление данных модели"""
+            category = Category.objects.get(pk=int(request.GET['pk']))
+            form = AddPostModelForm(request.POST, request.FILES, instance=category)
+            if form.is_valid():
+                form.save()
+        else:
+            """ Создание новой модель """
+            form = AddPostModelForm(request.POST, request.FILES)
+            if form.is_valid():
+                _values = form.cleaned_data
+                p = Category(**_values)
+                p.save()
+                p_id = '?pk=' + str(p.id)
+    else:
+        if 'pk' in request.GET:
+            """ Отображение существующей модели """
+            p = Category.objects.values().get(pk=int(request.GET['pk']))
+            form = AddPostModelForm(p)
+            p_id = '?pk=' + str(p.get('id'))
+            form._errors = ErrorDict()  # отключение валидации полей
+        else:
+            """ Отображение новой модель """
+            form = AddPostModelForm()
+
+    return render(request, 'forms/addpage.html', {'form': form, 'p_id': p_id, 'title': 'Добавление статьи'})
 
 
 def email(request):
