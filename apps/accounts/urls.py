@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from apps.accounts.views import *
 
 urlpatterns = [
@@ -7,4 +7,5 @@ urlpatterns = [
     path('add_form', addpage, name='add_page'),
     path('add_model_form', addmodelpage, name='add_model_page'),
     path('mail', email),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]

@@ -2,13 +2,17 @@ from datetime import date
 
 from django.db import models
 from django.urls import reverse
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Category(models.Model):
     name = models.CharField(max_length=100, db_index=True, verbose_name="Категория")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
 
-    content = models.TextField(max_length=255, blank=True)
+    # content = models.TextField(max_length=255, blank=True)
+
+    content = RichTextUploadingField()
+
     is_published = models.BooleanField(default=False)
 
     CHOICES = (
