@@ -8,4 +8,5 @@ urlpatterns = [
     path('add_model_form', addmodelpage, name='add_model_page'),
     path('mail', email),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('category', CategoryREST.as_view()),
 ]

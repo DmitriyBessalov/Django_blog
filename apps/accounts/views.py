@@ -5,6 +5,10 @@ from .forms import AddPostForm, AddPostModelForm
 from .models import Category
 from django.forms.utils import ErrorDict
 
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .serializers import *
 
 # Create your views here.
 def home(request):
@@ -72,3 +76,10 @@ def email(request):
     print('отправлено')
 
     return render(request, 'base.html')
+
+
+class CategoryREST(APIView):
+    def get(self, request):
+        category = Category.objects.all()
+        serializer = CategorySerializer(category, many=True)
+        return Response({"category": serializer.data})

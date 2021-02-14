@@ -26,7 +26,7 @@ class Category(models.Model):
 
     like = models.CharField(max_length=255, choices=CHOICES, default='')
 
-    Countries = models.JSONField(choices=CHOICES, default='')
+    Countries = models.JSONField(choices=CHOICES, default='{}')
 
     date1 = models.DateField(default=date.today)
     file = models.FileField(upload_to="photos/%Y/%m/%d/", blank=True, null=True)

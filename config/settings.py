@@ -38,15 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
-
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
     'crispy_forms',
     'apps.accounts',
 
     'ckeditor',
     'ckeditor_uploader',
+
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
