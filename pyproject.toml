@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "all_aunf"
+name = "social_network"
 version = "0.1.0"
 description = ""
 authors = ["dmitriy <dmitriy@bessalov.ru>"]
@@ -8,10 +8,11 @@ authors = ["dmitriy <dmitriy@bessalov.ru>"]
 python = "^3.9"
 Django = "^3.1.4"
 Pillow = "^8.0.1"
-django-allauth = "^0.44.0"
 django-crispy-forms = "^1.10.0"
 django-ckeditor = "^6.0.0"
 djangorestframework = "^3.12.2"
+djoser = "^2.1.0"
+django-cors-headers = "^3.7.0"
 
 [tool.poetry.dev-dependencies]
 

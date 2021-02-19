@@ -5,5 +5,5 @@ from .views import Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('name', 'slug')
+        fields = ('pk', 'name', 'slug')
 
