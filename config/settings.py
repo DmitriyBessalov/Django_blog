@@ -3,8 +3,6 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -29,6 +27,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_swagger',
 
     'djoser',
     'corsheaders',
@@ -45,7 +44,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-#    'corsheaders.middleware.CorsMiddleware',  # CORS заголовки
+    'corsheaders.middleware.CorsMiddleware',  # CORS заголовки
 
 ]
 
@@ -58,7 +57,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             # 'nodejs/build',
-            # 'templates',
+            'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -68,6 +67,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
+            }
         },
     },
 ]
@@ -97,30 +99,10 @@ CORS_ALLOW_METHODS = [
     'PUT',
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.IsAuthenticated',
-#     ],
-#     "DEFAULT_PARSER_CLASSES": [
-#         "rest_framework.parsers.JSONParser",
-#     ],
-#     "DEFAULT_AUTHENTICATION_CLASSES": [
-#         # "rest_framework.authentication.SessionAuthentication",
-#         # "rest_framework_simplejwt.authentication.JWTAuthentication",
-#         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
-#         "rest_framework_social_oauth2.authentication.SocialAuthentication",
-#     ],
-#     # "AUTH_TOKEN_CLASSES": [
-#     #     "rest_framework_simplejwt.tokens.AccessToken",
-#     #     "rest_framework_simplejwt.tokens.SlidingToken",
-#     # ]
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}
 
-# AUTHENTICATION_BACKENDS = [
-#     'social_core.backends.vk.VKOAuth2',
-#     'rest_framework_social_oauth2.backends.DjangoOAuth2',
-#     'django.contrib.auth.backends.ModelBackend',
-# ]
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = '7537017'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = '9ysNt0v6Xe8J21XVNHme'
@@ -146,7 +128,9 @@ LOGIN_REDIRECT_URL = '/'
 
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [STATIC_DIR]
+STATICFILES_DIRS = ['nodejs/build', ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/media/'
@@ -154,6 +138,7 @@ MEDIA_ROOT = '/media/'
 
 # SITE_ID = 1
 
+APPEND_SLASH = False    # игнорировать символ "/" в конце url в DRF
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'localhost'
