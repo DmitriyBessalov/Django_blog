@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # приложения django
-    'api.users',
+    'apps.users',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +49,14 @@ MIDDLEWARE = [
 ]
 
 AUTH_USER_MODEL = 'users.SocialUser'
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {},
+}
 
 ROOT_URLCONF = 'config.urls'
 
