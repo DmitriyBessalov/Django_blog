@@ -7,7 +7,7 @@ from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title='Open API')
 
 urlpatterns = [
-     path('/auth', include('djoser.urls')),
+     path('/auth/', include('djoser.urls')),
      path('/auth/token', obtain_auth_token, name='token'),
      url('^$', schema_view),
 ]
