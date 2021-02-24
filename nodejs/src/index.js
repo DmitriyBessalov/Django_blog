@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route} from "react-router-dom";
-import Navbar from './component/navbar';
-import Article from './component/article';
+import Navbar from './components/navbar';
+import Article from './components/Article';
 
 import reportWebVitals from './reportWebVitals';
 
