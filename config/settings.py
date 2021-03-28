@@ -56,8 +56,7 @@ AUTHENTICATION_BACKENDS = [
 
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'auth/users/activation/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {},
 }
@@ -99,7 +98,7 @@ DATABASES = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:8080",
+    "http://127.0.0.1:3000",
 ]
 
 CORS_ALLOW_METHODS = [
@@ -149,6 +148,8 @@ MEDIA_ROOT = '/media/'
 
 
 # SITE_ID = 1
+SESSION_COOKIE_DOMAIN = '127.0.0.1:3000'
+
 
 APPEND_SLASH = False    # игнорировать символ "/" в конце url в DRF
 

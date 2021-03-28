@@ -1,5 +1,5 @@
 import React from 'react';
-import style from "../Aunf.module.css";
+import style from "../Auth.module.css";
 
 export const ResetActivation = () => {
    return (
