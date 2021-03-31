@@ -1,9 +1,10 @@
 import React from 'react';
+import style from "../Auth.module.css";
 import {Button, TextField, Typography} from "@material-ui/core";
 import classes from "../Auth.module.css";
 
-export const ResendActivation = () => {
-    const [email, setEmail] = React.useState(localStorage.getItem('email'))
+export const ResetPassword = () => {
+        const [email, setEmail] = React.useState(localStorage.getItem('email'))
     const [emailError, setEmailError] = React.useState(false)
     const [formSend, setFormSend] = React.useState(false)
 
@@ -14,7 +15,7 @@ export const ResendActivation = () => {
     const FormSubmit = (event) => {
         const _json = '{"email":"' + email + '"}'
         console.log(_json)
-        fetch('http://127.0.0.1:8000/api/auth/users/resend_activation/', {
+        fetch('http://127.0.0.1:8000/api/auth/users/reset_password/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: _json
@@ -42,7 +43,7 @@ export const ResendActivation = () => {
                     </Typography>
                 :   <form noValidate>
                         <Typography variant="h1" className={classes.h1}>
-                            Повторное подтверждение Email
+                            Сброс пароля
                         </Typography>
                         <TextField
                             label="Email адрес"
@@ -58,5 +59,5 @@ export const ResendActivation = () => {
                     </form>
             }
         </>
-    )
+  )
 }

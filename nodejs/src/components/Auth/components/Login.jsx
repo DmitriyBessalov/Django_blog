@@ -38,33 +38,32 @@ export const Login = () => {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: _json
-        }).then(response => response.json().then(
-                data => ({
-                    status: response.status,
-                    data: data,
-                })
-            ).then(res => {
-                console.log(res.data.token)
-                if (res.status === 200){
-
-                    console.log('залогинились')
-                    setPasswordError(false)
-                    setPasswordHelperText(null)
-
-                    localStorage.setItem('token', res.data.token)
-                    if (rememberPassword) {
-                        localStorage.setItem('email', email)
-                        localStorage.setItem('password', password)
-                    }
-
-                } else if (res.status === 400){
-                    if (res.data.non_field_errors !== undefined) {
-                        setPasswordError(true)
-                        setPasswordHelperText(res.data.non_field_errors)
-                    }
-                }
+        }).then(
+            async response => ({
+                status: response.status,
+                body: await response.text(),
             })
-        )
+        ).then(response => {
+            console.log(JSON.parse(response.body).token)
+            if (response.status === 200){
+
+                console.log('залогинились')
+                setPasswordError(false)
+                setPasswordHelperText(null)
+
+                localStorage.setItem('token', JSON.parse(response.body).token)
+                if (rememberPassword) {
+                    localStorage.setItem('email', email)
+                    localStorage.setItem('password', password)
+                }
+
+            } else if (response.status === 400){
+                if (JSON.parse(response.body).non_field_errors !== undefined) {
+                    setPasswordError(true)
+                    setPasswordHelperText(JSON.parse(response.body).non_field_errors)
+                }
+            }
+        })
     }
 
 

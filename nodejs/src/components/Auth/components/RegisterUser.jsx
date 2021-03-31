@@ -4,13 +4,15 @@ import {Typography, TextField, Grid, Button} from '@material-ui/core';
 import classes from '../Auth.module.css'
 
 export const RegisterUser = () => {
-    const [email, setEmail] = React.useState(localStorage.getItem('email'))
-    const [password, setPassword] = React.useState(localStorage.getItem('password'))
+    const [email, setEmail] = React.useState('')
+    const [password, setPassword] = React.useState('')
 
     const [emailError, setEmailError] = React.useState(null)
     const [passwordError, setPasswordError] = React.useState(null)
     const [emailHelperText, setEmailHelperText] = React.useState(null)
     const [passwordHelperText, setPasswordHelperText] = React.useState(null)
+
+    const [formSend, setFormSend] = React.useState(false)
 
     const onChangeEmail = event => {
         setEmail(event.target.value)
@@ -22,68 +24,84 @@ export const RegisterUser = () => {
 
     const FormSubmit = (event) => {
         const _json = '{"email":"' + email + '","username":"' + email + '","password":"' + password + '"}'
+        console.log(_json)
         fetch('http://127.0.0.1:8000/api/auth/users/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: _json
-        }).then(response => response.json().then(
-                data => ({
-                    status: response.status,
-                    data: data,
-                })
-            ).then(res => {
-                console.log(res.data)
-                if (res.status === 201){
-                    console.log('Зарегистрировались')
-                    setEmailHelperText(null)
-                    setEmailError(false)
-                    setPasswordHelperText(null)
-                    setPasswordError(false)
-                    document.location.href='/auth/users/confirm'
-
-                } else if (res.status === 400){
-                    if (res.data.email !== undefined){
-                        setEmailHelperText(res.data.email)
+        }).then(
+            async response => ({
+                status: response.status,
+                body: await response.text(),
+            })
+        ).then(
+            response=>{
+                if (response.status === 201) {
+                    localStorage.setItem('email', JSON.parse(response.body).email)
+                    setFormSend(true)
+                }else if (response.status === 400){
+                    if (JSON.parse(response.body).email !== undefined){
+                        setEmailHelperText(JSON.parse(response.body).email)
                         setEmailError(true)
                     }else{
+                        setEmailHelperText('')
                         setEmailError(false)
                     }
-                    if (res.data.password !== undefined){
-                        setPasswordHelperText(res.data.password)
+                    if (JSON.parse(response.body).password !== undefined){
+                        setPasswordHelperText(JSON.parse(response.body).password)
                         setPasswordError(true)
                     }else{
+                        setPasswordHelperText('')
                         setPasswordError(false)
                     }
                 }
-            })
+            }
         )
     }
 
     return (
-       <form noValidate>
-            <Typography variant="h1" className={classes.h1}>
-               Регистрация
-            </Typography>
+        <>
+            {   formSend
+                ?(
+                    <>
+                        <Typography>
+                            Вы зарегистрировались.
+                        </Typography>
+                        <Typography>
+                            Для авторизации подтвердите Ваш емайл, письмо отправлено.
+                        </Typography>
+                        <Typography>
+                            Если письмо не пришло <Link to="/auth/users/resend_activation">повторите активацию</Link>
+                        </Typography>
+                    </>
+                ):(
+                    <form noValidate>
+                        <Typography variant="h1" className={classes.h1}>
+                           Регистрация
+                        </Typography>
 
-            <TextField label="Email адрес" variant="outlined" className={classes.input} required
-                onChange={onChangeEmail}
-                value={email}
-                error={emailError}
-                helperText={emailHelperText}
-            />
+                        <TextField label="Email адрес" variant="outlined" className={classes.input} required
+                            onChange={onChangeEmail}
+                            value={email}
+                            error={emailError}
+                            helperText={emailHelperText}
+                        />
 
-            <TextField label="Пароль" variant="outlined" className={classes.input} type="password" required
-                onChange={onChangePassword}
-                value={password}
-                error={passwordError}
-                helperText={passwordHelperText}
-            />
+                        <TextField label="Пароль" variant="outlined" className={classes.input} type="password" required
+                            onChange={onChangePassword}
+                            value={password}
+                            error={passwordError}
+                            helperText={passwordHelperText}
+                        />
 
-            <Grid container direction="row" justify="flex-end" alignItems="center" className={classes.grid}>
-                <Link to="/aunf/login">Уже зарегистрированны</Link>
-            </Grid>
+                        <Grid container direction="row" justify="flex-end" alignItems="center" className={classes.grid}>
+                            <Link to="/aunf/login">Уже зарегистрированны</Link>
+                        </Grid>
 
-            <Button className={classes.buttonW100} variant="contained" onClick={FormSubmit}>Зарегистрироваться</Button>
-        </form>
+                        <Button className={classes.buttonW100} variant="contained" onClick={FormSubmit}>Зарегистрироваться</Button>
+                    </form>
+                )
+            }
+       </>
     )
 }

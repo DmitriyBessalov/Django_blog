@@ -12,6 +12,7 @@ export const Activation = (props) => {
     useEffect(() => {
         renderCount.current++
         if (renderCount.current === 2){
+
             fetch('http://127.0.0.1:8000/api/auth/users/activation/', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -38,6 +39,7 @@ export const Activation = (props) => {
             ).catch(
                 response => setResult('Вы успешно подтвердили email')
             )
+
         }
     })
 
@@ -46,6 +48,5 @@ export const Activation = (props) => {
         <Typography>{result}</Typography>
     </>
     )
-
 }
 

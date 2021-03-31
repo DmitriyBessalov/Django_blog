@@ -4,32 +4,28 @@ import {RegisterUser} from "./components/RegisterUser"
 import {Login} from "./components/Login"
 import {Activation} from "./components/Activation"
 import {ResendActivation} from "./components/ResendActivation"
-import {ResetActivation} from "./components/ResetActivation"
+import {ResetPassword} from "./components/ResetPassword"
 import {Logout} from "./components/Logout"
-import {Confirm} from "./components/Confirm";
 import classes from './Auth.module.css'
 
 export const Auth = (props) => {
   return (
       <div className={classes.container}>
           <Switch>
-            {/* Авторизация */}
-            <Route path="/auth/login" component={Login}/>
-
             {/* Регистрация пользователя */}
             <Route path="/auth/users" exact  component={RegisterUser}/>
 
-            {/* Письмо успешно отправлено на емайл */}
-            <Route path="/auth/users/confirm" component={Confirm}/>
-
-            {/* Страница (успешного или нет) подтвержния активации email */}
-            <Route path="/auth/users/activation/:uid/:token" component={Activation}/>
-
-            {/* Повторная отправка на емайл */}
+            {/* Повторная запрос активации */}
             <Route path="/auth/users/resend_activation" component={ResendActivation}/>
 
+            {/* Страница подтвержния активации email */}
+            <Route path="/auth/users/activation/:uid/:token" component={Activation}/>
+
+            {/* Авторизация */}
+            <Route path="/auth/login" component={Login}/>
+
             {/* Сброс пароля */}
-            <Route path="/auth/users/reset_password" component={ResetActivation}/>
+            <Route path="/auth/reset_password" component={ResetPassword}/>
 
             {/* Выход */}
             <Route path="/auth/logout" component={Logout}/>

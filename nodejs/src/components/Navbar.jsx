@@ -1,7 +1,16 @@
 import React from 'react';
-import {Container, AppBar, Popover, Toolbar, IconButton, Button, MenuItem} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {
+    Container,
+//    AppBar,
+    Popover,
+//    Toolbar,
+//    IconButton,
+    Button,
+    MenuItem
+} from '@material-ui/core';
+
+//import MenuIcon from '@material-ui/icons/Menu';
+//import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import {Link} from "react-router-dom";
 
@@ -11,7 +20,7 @@ export const NavMenu = () => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
-        setAnchorEl(null);
+         setAnchorEl(null);
     };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -24,7 +33,7 @@ export const NavMenu = () => {
         </Link>
         <Button variant="contained" style={{"margin": "10px"}}>Онлайн игра</Button>
         <Button aria-describedby={id} variant="contained" style={{"margin": "10px"}} onClick={handleClick}>
-            Меню авторизации
+            Меню авторизаци
         </Button>
         <Popover
             id={id}
@@ -35,22 +44,22 @@ export const NavMenu = () => {
             transformOrigin={{vertical: 'top', horizontal: 'center'}}
         >
             <Link to="/auth/users">
-                <MenuItem>Создание пользователя</MenuItem>
+                <MenuItem>+ Регистрация</MenuItem>
             </Link>
-            <Link to="/auth/users/activation">
-                <MenuItem>Активация</MenuItem>
+            <Link to="/auth/users/activation/{uuid}/{token}">
+                <MenuItem>+ Активация </MenuItem>
             </Link>
             <Link to="/auth/users/resend_activation">
-                <MenuItem>Повторить активацию</MenuItem>
+                <MenuItem>+ Повторить активацию</MenuItem>
             </Link>
             <Link to="/auth/login">
-                <MenuItem>Авторизация</MenuItem>
+                <MenuItem>- Авторизация</MenuItem>
             </Link>
             <Link to="/auth/reset_password">
-                <MenuItem>Сбросить пароль</MenuItem>
+                <MenuItem>- Сбросить пароль</MenuItem>
             </Link>
             <Link to="/auth/logout">
-                <MenuItem>Выход</MenuItem>
+                <MenuItem>- Выход</MenuItem>
             </Link>
         </Popover>
     </Container>
