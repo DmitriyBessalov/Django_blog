@@ -1,15 +1,18 @@
 import os
 
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv('django.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#!j1*kt3i24-0c*3wv==iu6_!hurrg#cur4*i!kb5$8)t7yj-y'
+SECRET_KEY = os.getenv('SECRETKEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (False, True)[os.getenv('DEBUG') == "True"]
 
 ALLOWED_HOSTS = ['*']
 
@@ -92,8 +95,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': int(os.getenv('POSTGRES_PORT'))
     }
 }
 
@@ -114,9 +121,8 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
-
-SOCIAL_AUTH_VK_OAUTH2_KEY = '7537017'
-SOCIAL_AUTH_VK_OAUTH2_SECRET = '9ysNt0v6Xe8J21XVNHme'
+# SOCIAL_AUTH_VK_OAUTH2_KEY = '7537017'
+# SOCIAL_AUTH_VK_OAUTH2_SECRET = '9ysNt0v6Xe8J21XVNHme'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -133,7 +139,6 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = '/'
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -142,22 +147,19 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = ['nodejs/build', ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/media/'
 
 # SITE_ID = 1
 SESSION_COOKIE_DOMAIN = '127.0.0.1:3000'
 
-
-APPEND_SLASH = False    # игнорировать символ "/" в конце url в DRF
+APPEND_SLASH = False  # игнорировать символ "/" в конце url в DRF
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_HOST_USER = 'no-reply@bessalov.ru'
 DEFAULT_FROM_EMAIL = 'no-reply@bessalov.ru'
 EMAIL_PORT = 25
-
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
