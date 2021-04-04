@@ -55,8 +55,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'auth/users/activation/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'auth/users/password_reset_confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'auth/reset_password/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {},
 }
@@ -145,7 +145,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/media/'
-
 
 # SITE_ID = 1
 SESSION_COOKIE_DOMAIN = '127.0.0.1:3000'
