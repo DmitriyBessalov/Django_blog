@@ -5,7 +5,7 @@ import {Login} from "./components/Login"
 import {Activation} from "./components/Activation"
 import {ResendActivation} from "./components/ResendActivation"
 import {ResetPassword} from "./components/ResetPassword"
-import {Logout} from "./components/Logout"
+import {ResetPasswordConfirm} from "./components/ResetPasswordConfirm"
 import classes from './Auth.module.css'
 
 export const Auth = (props) => {
@@ -27,8 +27,8 @@ export const Auth = (props) => {
             {/* Сброс пароля */}
             <Route path="/auth/reset_password" component={ResetPassword}/>
 
-            {/* Выход */}
-            <Route path="/auth/logout" component={Logout}/>
+            {/* Сброс пароля подтверждение*/}
+            <Route path="/auth/users/password_reset_confirm/:uid/:token" component={ResetPasswordConfirm}/>
 
           </Switch>
       </div>

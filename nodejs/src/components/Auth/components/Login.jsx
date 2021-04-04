@@ -19,6 +19,8 @@ export const Login = () => {
     const [passwordError, setPasswordError] = React.useState(null)
     const [passwordHelperText, setPasswordHelperText] = React.useState(null)
 
+    const [formSend, setFormSend] = React.useState(false)
+
     const onChangeEmail = event => {
         setEmail(event.target.value)
     }
@@ -46,17 +48,14 @@ export const Login = () => {
         ).then(response => {
             console.log(JSON.parse(response.body).token)
             if (response.status === 200){
-
-                console.log('залогинились')
                 setPasswordError(false)
                 setPasswordHelperText(null)
-
                 localStorage.setItem('token', JSON.parse(response.body).token)
+                localStorage.setItem('email', email)
                 if (rememberPassword) {
-                    localStorage.setItem('email', email)
                     localStorage.setItem('password', password)
                 }
-
+                setFormSend(true)
             } else if (response.status === 400){
                 if (JSON.parse(response.body).non_field_errors !== undefined) {
                     setPasswordError(true)
@@ -66,42 +65,47 @@ export const Login = () => {
         })
     }
 
+   return (
+       <>
+           {   formSend
+               ?   <Typography>
+                       Вы залогинились
+                   </Typography>
+               :   <form noValidate>
+                       <Typography variant="h1" className={classes.h1}>
+                          Авторизация
+                       </Typography>
 
+                       <TextField label="Email адрес" variant="outlined" className={classes.input} required
+                           onChange={onChangeEmail}
+                           value={email}
+                           error={passwordError}
+                       />
 
-    return (
-       <form noValidate>
-            <Typography variant="h1" className={classes.h1}>
-               Авторизация
-            </Typography>
+                       <TextField label="Пароль" variant="outlined" className={classes.input} type="password" required
+                           onChange={onChangePassword}
+                           value={password}
+                           error={passwordError}
+                           helperText={passwordHelperText}
+                       />
 
-            <TextField label="Email адрес" variant="outlined" className={classes.input} required
-                onChange={onChangeEmail}
-                value={email}
-                error={passwordError}
-            />
-
-            <TextField label="Пароль" variant="outlined" className={classes.input} type="password" required
-                onChange={onChangePassword}
-                value={password}
-                error={passwordError}
-                helperText={passwordHelperText}
-            />
-
-           <Grid container direction="row" justify="space-between" alignItems="center" className={classes.grid}>
-               <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="checked"
-                      color="primary"
-                      onChange={onChangeRememberPassword}
-                      checked={rememberPassword}
-                    />
-                  }
-                  label="Запомнить пароль"
-               />
-               <Link to="/auth/reset_password">Забыли пароль</Link>
-           </Grid>
-           <Button className={classes.buttonW100} variant="contained" onClick={FormSubmit} >Войти</Button>
-        </form>
+                       <Grid container direction="row" justify="space-between" alignItems="center" className={classes.grid}>
+                           <FormControlLabel
+                              control={
+                                <Checkbox
+                                  name="checked"
+                                  color="primary"
+                                  onChange={onChangeRememberPassword}
+                                  checked={rememberPassword}
+                                />
+                              }
+                              label="Запомнить пароль"
+                           />
+                           <Link to="/auth/reset_password">Забыли пароль</Link>
+                       </Grid>
+                       <Button className={classes.buttonW100} variant="contained" onClick={FormSubmit} >Войти</Button>
+                   </form>
+           }
+       </>
    )
 }

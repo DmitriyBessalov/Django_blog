@@ -1,10 +1,9 @@
 import React from 'react';
-import style from "../Auth.module.css";
 import {Button, TextField, Typography} from "@material-ui/core";
 import classes from "../Auth.module.css";
 
 export const ResetPassword = () => {
-        const [email, setEmail] = React.useState(localStorage.getItem('email'))
+    const [email, setEmail] = React.useState(localStorage.getItem('email'))
     const [emailError, setEmailError] = React.useState(false)
     const [formSend, setFormSend] = React.useState(false)
 

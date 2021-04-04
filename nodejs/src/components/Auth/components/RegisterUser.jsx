@@ -23,40 +23,45 @@ export const RegisterUser = () => {
     }
 
     const FormSubmit = (event) => {
-        const _json = '{"email":"' + email + '","username":"' + email + '","password":"' + password + '"}'
-        console.log(_json)
-        fetch('http://127.0.0.1:8000/api/auth/users/', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: _json
-        }).then(
-            async response => ({
-                status: response.status,
-                body: await response.text(),
-            })
-        ).then(
-            response=>{
-                if (response.status === 201) {
-                    localStorage.setItem('email', JSON.parse(response.body).email)
-                    setFormSend(true)
-                }else if (response.status === 400){
-                    if (JSON.parse(response.body).email !== undefined){
-                        setEmailHelperText(JSON.parse(response.body).email)
-                        setEmailError(true)
-                    }else{
-                        setEmailHelperText('')
-                        setEmailError(false)
-                    }
-                    if (JSON.parse(response.body).password !== undefined){
-                        setPasswordHelperText(JSON.parse(response.body).password)
-                        setPasswordError(true)
-                    }else{
-                        setPasswordHelperText('')
-                        setPasswordError(false)
+        if (password.length > 5){
+            const _json = '{"email":"' + email + '","username":"' + email + '","password":"' + password + '"}'
+            console.log(_json)
+            fetch('http://127.0.0.1:8000/api/auth/users/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: _json
+            }).then(
+                async response => ({
+                    status: response.status,
+                    body: await response.text(),
+                })
+            ).then(
+                response=>{
+                    if (response.status === 201) {
+                        localStorage.setItem('email', JSON.parse(response.body).email)
+                        setFormSend(true)
+                    }else if (response.status === 400){
+                        if (JSON.parse(response.body).email !== undefined){
+                            setEmailHelperText(JSON.parse(response.body).email)
+                            setEmailError(true)
+                        }else{
+                            setEmailHelperText('')
+                            setEmailError(false)
+                        }
+                        if (JSON.parse(response.body).password !== undefined){
+                            setPasswordHelperText(JSON.parse(response.body).password)
+                            setPasswordError(true)
+                        }else{
+                            setPasswordHelperText('')
+                            setPasswordError(false)
+                        }
                     }
                 }
-            }
-        )
+            )
+        }else{
+            setPasswordHelperText('Минимальная длина пароля 6 символов')
+            setPasswordError(true)
+        }
     }
 
     return (
