@@ -8,6 +8,6 @@ def index(request):
 
 
 def git_pull(request):
-    shell = os.system(
-        'git reset --hard origin/master && git pull https://github.com/DmitriyBessalov/social_network.git')
-    return HttpResponse(shell)
+    os.system('git reset --hard origin/master && git pull https://github.com/DmitriyBessalov/social_network.git')
+    return HttpResponse('True')
+
