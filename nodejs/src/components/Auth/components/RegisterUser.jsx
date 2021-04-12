@@ -26,7 +26,7 @@ export const RegisterUser = () => {
         if (password.length > 5){
             const _json = '{"email":"' + email + '","username":"' + email + '","password":"' + password + '"}'
             console.log(_json)
-            fetch('http://127.0.0.1:8000/api/auth/users/', {
+            fetch('/api/auth/users/', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: _json

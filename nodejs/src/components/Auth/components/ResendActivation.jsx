@@ -14,7 +14,7 @@ export const ResendActivation = () => {
     const FormSubmit = (event) => {
         const _json = '{"email":"' + email + '"}'
         console.log(_json)
-        fetch('http://127.0.0.1:8000/api/auth/users/resend_activation/', {
+        fetch('/api/auth/users/resend_activation/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: _json

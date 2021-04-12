@@ -36,7 +36,7 @@ export const Login = () => {
     const FormSubmit = (event) => {
         const _json = '{"email":"' + email + '","username":"' + email + '","password":"' + password + '"}'
         console.log(_json)
-        fetch('http://127.0.0.1:8000/api/auth/token', {
+        fetch('/api/auth/token', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: _json

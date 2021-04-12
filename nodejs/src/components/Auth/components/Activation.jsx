@@ -13,7 +13,7 @@ export const Activation = (props) => {
         renderCount.current++
         if (renderCount.current === 2){
 
-            fetch('http://127.0.0.1:8000/api/auth/users/activation/', {
+            fetch('/api/auth/users/activation/', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: _json
