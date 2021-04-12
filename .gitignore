@@ -1,3 +1,4 @@
 /poetry.lock
 /django.env
 /.idea
+/nodejs/node_modules
