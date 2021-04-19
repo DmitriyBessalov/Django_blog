@@ -17,6 +17,8 @@ django-rest-swagger = "^2.2.0"
 python-dotenv = "^0.17.0"
 psycopg2-binary = "^2.8.6"
 daphne = "^3.0.1"
+django-ninja = "^0.12.2"
+orjson = "^3.5.2"
 
 [tool.poetry.dev-dependencies]
 
