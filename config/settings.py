@@ -105,9 +105,9 @@ DATABASES = {
     }
 }
 
-CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.1:3000",
-]
+# CORS_ORIGIN_WHITELIST = [
+#     "https://bessalov.ru",
+# ]
 
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -152,7 +152,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = '/media/'
 
 # SITE_ID = 1
-SESSION_COOKIE_DOMAIN = '127.0.0.1:3000'
 
 APPEND_SLASH = False  # игнорировать символ "/" в конце url в DRF
 
