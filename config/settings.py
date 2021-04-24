@@ -105,9 +105,11 @@ DATABASES = {
     }
 }
 
-# CORS_ORIGIN_WHITELIST = [
-#     "https://bessalov.ru",
-# ]
+CORS_ORIGIN_WHITELIST = [
+    "http://127.0.0.1",
+    "http://127.0.0.1:8000",
+    "https://bessalov.ru",
+]
 
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -226,5 +228,27 @@ CKEDITOR_CONFIGS = {
             'elementspath',
             'youtube'
         ]),
+    }
+}
+
+LOGGING = {
+    'version': 1,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
     }
 }

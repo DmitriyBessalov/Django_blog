@@ -1,12 +1,36 @@
 from django.http import JsonResponse, HttpResponse
 from apps.article.models import Article
 from apps.article.schemas import *
+from django.views.decorators.csrf import csrf_exempt
+
 
 from ninja import Router
+from ninja.security import HttpBearer
+from ninja.security import APIKeyHeader
+
 
 router = Router()
 
 
+class AuthBearer(HttpBearer):
+    def authenticate(self, request, token):
+        if token == "supersecret":
+            return token
+
+
+@csrf_exempt
+@router.get('/somemethod', auth=AuthBearer())
+def somemethod(request):
+    pass
+
+
+@csrf_exempt
+@router.get("/test_aunf", auth=AuthBearer())
+def basic(request):
+    return {"httpuser": request.auth}
+
+
+@csrf_exempt
 @router.post('/')
 def article_create(request, payload: ArticleCreate):
     data = payload.dict()
