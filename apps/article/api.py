@@ -1,36 +1,29 @@
 from django.http import JsonResponse, HttpResponse
+
+from apps.users.models import authentication_jwt
+
 from apps.article.models import Article
 from apps.article.schemas import *
-from django.views.decorators.csrf import csrf_exempt
-
 
 from ninja import Router
 from ninja.security import HttpBearer
-from ninja.security import APIKeyHeader
+
+
+class AuthBearer(HttpBearer):
+    def authenticate(self, request, token):
+        return token
 
 
 router = Router()
 
 
-class AuthBearer(HttpBearer):
-    def authenticate(self, request, token):
-        if token == "supersecret":
-            return token
+@router.get("/bearer", auth=AuthBearer())
+def bearer(request):
+    """ Получиние авторизации пользователя """
+    request.user = authentication_jwt(token=request.auth)
+    return {"email": request.user.email}
 
 
-@csrf_exempt
-@router.get('/somemethod', auth=AuthBearer())
-def somemethod(request):
-    pass
-
-
-@csrf_exempt
-@router.get("/test_aunf", auth=AuthBearer())
-def basic(request):
-    return {"httpuser": request.auth}
-
-
-@csrf_exempt
 @router.post('/')
 def article_create(request, payload: ArticleCreate):
     data = payload.dict()
